@@ -286,3 +286,77 @@ contactBtn.addEventListener('click', function() {
     }, 50); // Small delay to ensure DOM is ready
   }
 }); 
+
+// Swipe functionality for mobile devices
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+let isSwiping = false;
+
+const minSwipeDistance = 50; // Minimum distance for a swipe
+const maxVerticalDistance = 100; // Maximum vertical movement to still count as horizontal swipe
+
+function handleTouchStart(e) {
+  // Only handle swipes on the main container (slideshow area)
+  const mainContainer = document.querySelector('.main-black-container');
+  if (!mainContainer || !mainContainer.contains(e.target)) return;
+  
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isSwiping = false;
+}
+
+function handleTouchMove(e) {
+  // Prevent default scrolling behavior during potential swipe
+  const mainContainer = document.querySelector('.main-black-container');
+  if (!mainContainer || !mainContainer.contains(e.target)) return;
+  
+  const currentX = e.touches[0].clientX;
+  const currentY = e.touches[0].clientY;
+  const deltaX = Math.abs(currentX - touchStartX);
+  const deltaY = Math.abs(currentY - touchStartY);
+  
+  // If horizontal movement is greater than vertical, prevent default scrolling
+  if (deltaX > deltaY && deltaX > 10) {
+    e.preventDefault();
+    isSwiping = true;
+  }
+}
+
+function handleTouchEnd(e) {
+  const mainContainer = document.querySelector('.main-black-container');
+  if (!mainContainer || !mainContainer.contains(e.changedTouches[0].target)) return;
+  
+  touchEndX = e.changedTouches[0].clientX;
+  touchEndY = e.changedTouches[0].clientY;
+  
+  handleSwipe();
+}
+
+function handleSwipe() {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = Math.abs(touchEndY - touchStartY);
+  
+  // Check if it's a valid horizontal swipe
+  if (Math.abs(deltaX) > minSwipeDistance && deltaY < maxVerticalDistance) {
+    if (deltaX > 0) {
+      // Swipe right - go to previous image
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSVG();
+      }
+    } else {
+      // Swipe left - go to next image
+      if (currentIndex < svgList.length - 1) {
+        currentIndex++;
+        updateSVG();
+      }
+    }
+  }
+}
+
+// Add touch event listeners
+document.addEventListener('touchstart', handleTouchStart, { passive: false });
+document.addEventListener('touchmove', handleTouchMove, { passive: false });
+document.addEventListener('touchend', handleTouchEnd, { passive: false }); 
