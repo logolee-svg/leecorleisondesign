@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'SuisseIntl';
-  src: url('./fonts/SuisseIntl-Medium-WebTrial.woff2') format('woff2');
+  src: url('/fonts/SuisseIntl-Medium-WebTrial.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -122,15 +122,38 @@ body {
 .hero-link-preview {
   position: absolute;
   right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60%;
+  height: 70%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-link:hover .hero-link-preview {
+  opacity: 1;
+}
+
+/* --- ORBIT CONTAINER (BRAND HOVER) --- */
+.orbit-preview-container {
+  position: absolute;
+  right: 3rem;
   top: 3rem;
   bottom: 3rem;
   width: 60%;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-link:hover .hero-link-preview {
+.hero-link:hover .orbit-preview-container {
   opacity: 1;
 }
 
@@ -567,9 +590,10 @@ body.contact-invert .contact-info {
   color: #fff;
 }
 
-/* --- TABLET: 2 columns (701–1100px) --- */
+/* --- TABLET: 2 columns (701-1100px) --- */
 @media (max-width: 1100px) {
-  .hero-link-preview {
+  .hero-link-preview,
+  .orbit-preview-container {
     width: 55%;
     right: 2rem;
     top: 50%;
@@ -606,7 +630,8 @@ body.contact-invert .contact-info {
 
 /* --- SMALL TABLET: hide hover previews (<=800px) --- */
 @media (max-width: 800px) {
-  .hero-link-preview {
+  .hero-link-preview,
+  .orbit-preview-container {
     display: none;
   }
 
