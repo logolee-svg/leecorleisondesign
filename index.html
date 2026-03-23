@@ -3,141 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Grid — Lee Corleison Design</title>
+  <title>Lee Corleison Design</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="frame">
     <nav class="top-nav">
-      <img class="lcd-logo" src="./images/lcdlogo.svg" alt="Lee Corleison Design Logo" />
-      <div class="lcd-typography">Lee Corleison<br>Design</div>
+      <a href="index.html" class="lcd-logo-link"><img class="lcd-logo" src="./images/lcdlogo.svg" alt="Lee Corleison Design Logo" /></a>
+      <a href="index.html" class="lcd-typography">Lee Corleison<br>Design</a>
       <div class="lcd-nav-right">
-        <button class="mode-toggle" aria-label="Toggle dark mode">
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
         <button class="contact-btn">Contact me</button>
       </div>
     </nav>
-    <div class="grid-container" id="gridContainer">
-      <div class="grid-card">
-        <img src="./images/-6.svg" alt="Logo -6" />
-        <a class="card-link" href="https://geodde.com/" target="_blank" rel="noopener">geodde.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
+    <div class="hero-container" id="heroContainer">
+      <div class="hero-links">
+        <a href="logos.html" class="hero-link">
+          <span class="hero-link-text">Brand.</span>
+          <div class="hero-link-preview" aria-hidden="true">
+            <img class="swirl-logo" src="./images/1.svg" alt="" />
+            <img class="swirl-logo" src="./images/3.svg" alt="" />
+            <img class="swirl-logo" src="./images/5.svg" alt="" />
+            <img class="swirl-logo" src="./images/7.svg" alt="" />
+            <img class="swirl-logo" src="./images/9.svg" alt="" />
+            <img class="swirl-logo" src="./images/14.svg" alt="" />
+            <img class="swirl-logo" src="./images/17.svg" alt="" />
+            <img class="swirl-logo" src="./images/19.svg" alt="" />
+            <img class="swirl-logo" src="./images/23.svg" alt="" />
+            <img class="swirl-logo" src="./images/27.svg" alt="" />
+            <img class="swirl-logo" src="./images/-1.svg" alt="" />
+            <img class="swirl-logo" src="./images/-4.svg" alt="" />
+          </div>
+        </a>
+        <a href="product.html" class="hero-link">
+          <span class="hero-link-text">Product.</span>
+          <div class="hero-link-preview" aria-hidden="true">
+            <img class="fan-card" src="./images/previews/geodde.png" alt="" />
+            <img class="fan-card" src="./images/previews/palomagroup.png" alt="" />
+            <img class="fan-card" src="./images/previews/authsignal.png" alt="" />
+            <img class="fan-card" src="./images/previews/nextwork.png" alt="" />
+          </div>
+        </a>
+        <a href="consult.html" class="hero-link">
+          <span class="hero-link-text">Consult.</span>
+          <div class="hero-link-preview"></div>
+        </a>
       </div>
-      <div class="grid-card">
-        <img src="./images/-5.svg" alt="Logo -5" />
-        <a class="card-link" href="https://geodde.com/" target="_blank" rel="noopener">geodde.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/-4.svg" alt="Logo -4" />
-        <a class="card-link" href="https://tracksynk.com/" target="_blank" rel="noopener">tracksynk.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/-3.svg" alt="Logo -3" />
-        <a class="card-link" href="https://tracksynk.com/" target="_blank" rel="noopener">tracksynk.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/-2.svg" alt="Logo -2" />
-        <a class="card-link" href="https://klippr.ai/" target="_blank" rel="noopener">klippr.ai <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/-1.svg" alt="Logo -1" />
-        <a class="card-link" href="https://klippr.ai/" target="_blank" rel="noopener">klippr.ai <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/1.svg" alt="Logo 1" />
-        <a class="card-link" href="https://gogondola.com/" target="_blank" rel="noopener">gogondola.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/2.svg" alt="Logo 2" />
-        <a class="card-link" href="https://gogondola.com/" target="_blank" rel="noopener">gogondola.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/3.svg" alt="Logo 3" />
-        <a class="card-link" href="https://palomagroup.com/" target="_blank" rel="noopener">palomagroup.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/4.svg" alt="Logo 4" />
-        <a class="card-link" href="https://palomagroup.com/" target="_blank" rel="noopener">palomagroup.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/5.svg" alt="Logo 5" />
-        <a class="card-link" href="https://www.nextwork.org/" target="_blank" rel="noopener">nextwork.org <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/6.svg" alt="Logo 6" />
-        <a class="card-link" href="https://www.nextwork.org/" target="_blank" rel="noopener">nextwork.org <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/27.svg" alt="Logo 27" />
-        <a class="card-link" href="https://www.yourplanna.com.au/" target="_blank" rel="noopener">yourplanna.com.au <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/28.svg" alt="Logo 28" />
-        <a class="card-link" href="https://www.yourplanna.com.au/" target="_blank" rel="noopener">yourplanna.com.au <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/14.svg" alt="Logo 14" />
-        <a class="card-link" href="https://authsignal.com/" target="_blank" rel="noopener">authsignal.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/15.svg" alt="Logo 15" />
-        <a class="card-link" href="https://authsignal.com/" target="_blank" rel="noopener">authsignal.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/7.svg" alt="Logo 7" />
-        <a class="card-link" href="https://botallow.com/" target="_blank" rel="noopener">botallow.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/8.svg" alt="Logo 8" />
-        <a class="card-link" href="https://botallow.com/" target="_blank" rel="noopener">botallow.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/17.svg" alt="Logo 17" />
-        <a class="card-link" href="https://bestawards.co.nz/digital/digital-products/paloma/spinaway/" target="_blank" rel="noopener">bestawards.co.nz <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/18.svg" alt="Logo 18" />
-        <a class="card-link" href="https://bestawards.co.nz/digital/digital-products/paloma/spinaway/" target="_blank" rel="noopener">bestawards.co.nz <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/9.svg" alt="Logo 9" />
-        <a class="card-link" href="https://www.enjoyasipper.com/" target="_blank" rel="noopener">enjoyasipper.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/10.svg" alt="Logo 10" />
-        <a class="card-link" href="https://www.enjoyasipper.com/" target="_blank" rel="noopener">enjoyasipper.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/23.svg" alt="Logo 23" />
-        <a class="card-link" href="https://www.plerion.com/" target="_blank" rel="noopener">plerion.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card">
-        <img src="./images/24.svg" alt="Logo 24" />
-        <a class="card-link" href="https://www.plerion.com/" target="_blank" rel="noopener">plerion.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card"><img src="./images/11.svg" alt="Logo 11" /></div>
-      <div class="grid-card"><img src="./images/12.svg" alt="Logo 12" /></div>
-      <div class="grid-card"><img src="./images/13.svg" alt="Logo 13" /></div>
-      <div class="grid-card"><img src="./images/16.svg" alt="Logo 16" /></div>
-      <div class="grid-card">
-        <img src="./images/19.svg" alt="Logo 19" />
-        <a class="card-link" href="https://www.supahuman.com/" target="_blank" rel="noopener">supahuman.com <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 7L7 1M7 1H2M7 1V6"/></svg></a>
-      </div>
-      <div class="grid-card"><img src="./images/20.svg" alt="Logo 20" /></div>
-      <div class="grid-card"><img src="./images/21.svg" alt="Logo 21" /></div>
-      <div class="grid-card"><img src="./images/22.svg" alt="Logo 22" /></div>
-      <div class="grid-card"><img src="./images/25.svg" alt="Logo 25" /></div>
-      <div class="grid-card"><img src="./images/26.svg" alt="Logo 26" /></div>
-      <div class="grid-card"><img src="./images/29.svg" alt="Logo 29" /></div>
-      <div class="grid-card"><img src="./images/30.svg" alt="Logo 30" /></div>
-      <div class="grid-card"><img src="./images/31.svg" alt="Logo 31" /></div>
-      <div class="grid-card"><img src="./images/32.svg" alt="Logo 32" /></div>
-      <div class="grid-card"><img src="./images/33.svg" alt="Logo 33" /></div>
-      <div class="grid-card"><img src="./images/34.svg" alt="Logo 34" /></div>
+      <p class="hero-intro">Product architect from brand to full stack engineer.</p>
     </div>
-    <nav class="bottom-nav">
-    </nav>
   </div>
   <script src="script.js"></script>
 </body>

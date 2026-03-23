@@ -1,35 +1,3 @@
-// --- DARK MODE ---
-const modeToggle = document.querySelector('.mode-toggle');
-
-function applyMode(dark) {
-  document.body.classList.toggle('dark-mode', dark);
-}
-
-function getStoredMode() {
-  return localStorage.getItem('lcd-dark-mode');
-}
-
-// Init: check localStorage first, then fall back to system preference
-const stored = getStoredMode();
-if (stored !== null) {
-  applyMode(stored === 'true');
-} else {
-  applyMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
-}
-
-// Listen for system preference changes (only applies if no manual override)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (getStoredMode() === null) {
-    applyMode(e.matches);
-  }
-});
-
-modeToggle.addEventListener('click', () => {
-  const nowDark = !document.body.classList.contains('dark-mode');
-  applyMode(nowDark);
-  localStorage.setItem('lcd-dark-mode', nowDark);
-});
-
 // --- CONTACT TOGGLE ---
 const contactBtn = document.querySelector('.contact-btn');
 const gridContainer = document.getElementById('gridContainer');
