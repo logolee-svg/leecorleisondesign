@@ -1,7 +1,8 @@
 // --- CONTACT TOGGLE ---
 const contactBtn = document.querySelector('.contact-btn');
-const gridContainer = document.getElementById('gridContainer');
-let originalGridHTML = gridContainer.innerHTML;
+const mainContent = document.getElementById('gridContainer') || document.getElementById('heroContainer') || document.querySelector('.product-container') || document.querySelector('.consult-container');
+let originalHTML = mainContent ? mainContent.innerHTML : '';
+let originalDisplay = mainContent ? mainContent.style.display : '';
 
 contactBtn.addEventListener('click', function () {
   contactBtn.blur();
@@ -9,19 +10,19 @@ contactBtn.addEventListener('click', function () {
   contactBtn.textContent = isInverted ? 'Close' : 'Contact me';
 
   if (isInverted) {
-    originalGridHTML = gridContainer.innerHTML;
-    gridContainer.innerHTML = '';
-    gridContainer.style.display = 'block';
-    gridContainer.innerHTML = `
+    originalHTML = mainContent.innerHTML;
+    originalDisplay = mainContent.style.display;
+    mainContent.style.display = 'block';
+    mainContent.innerHTML = `
       <div class="contact-container">
         <div class="contact-info">
-          <div class="email">leecorleison@gmail.com</div>
-          <div class="phone">+64 27 309 2926</div>
+          <div class="email">lee@tracksynk.com</div>
+          <div class="phone">027 309 2926</div>
         </div>
       </div>
     `;
   } else {
-    gridContainer.innerHTML = originalGridHTML;
-    gridContainer.style.display = '';
+    mainContent.innerHTML = originalHTML;
+    mainContent.style.display = originalDisplay;
   }
 });
