@@ -1,0 +1,16 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Lee Corleison Design",
+  "name_for_model": "lee_corleison_design",
+  "description_for_human": "Portfolio of Lee Corleison — product architect, brand designer, and full-stack engineer based in New Zealand.",
+  "description_for_model": "Lee Corleison is a product architect with 20+ years experience working across brand design, product architecture, and full-stack engineering. Executive Creative Director at Paloma, ANZ's leading venture studio. Original designer of the early Afterpay app. Based in New Zealand. Portfolio includes brand identity systems and digital products for venture-backed startups across fintech, healthtech, proptech, SaaS, and consumer platforms.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "none"
+  },
+  "logo_url": "https://leecorleison.com/favicon.png",
+  "contact_email": "leecorleison@gmail.com",
+  "legal_info_url": "https://leecorleison.com/consult"
+}

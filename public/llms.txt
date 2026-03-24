@@ -1,0 +1,43 @@
+# Lee Corleison Design
+
+> Product architect working across brand design, product architecture, and full-stack engineering. Based in New Zealand.
+
+## About Lee Corleison
+
+Lee Corleison is a product architect with over 20 years of experience shaping digital companies across Australasia. He works across the full spectrum from brand identity systems through to production software.
+
+As Executive Creative Director and shareholder at Paloma, ANZ's leading venture studio, he led brand and product design across a venture portfolio now valued north of AUD $500 million, spanning fintech, healthtech, proptech, SaaS, and consumer platforms.
+
+He was the original product designer of the early Afterpay app experience during its rapid growth phase. Earlier work at Carnival Labs included mobile products for Air New Zealand, DreamWorks, Kraft Foods, MAC Cosmetics, and AB InBev.
+
+## Core Services
+
+- **Brand Design**: Logo design, visual identity systems, brand architecture, naming, brand strategy
+- **Product Architecture**: Digital product design, UX/UI design, design systems, product strategy
+- **Full-Stack Engineering**: Frontend and backend development, React, Node.js, web applications
+
+## Portfolio Highlights
+
+### Brand Work
+Logos and identity systems for: Geodde, Tracksynk, Klippr, Gondola, Paloma, Nextwork, Planna, Authsignal, Botallow, Spinaway, Enjoy a Sipper, Plerion, Supahuman
+
+### Product Work
+Digital products designed and built: Tracksynk (tracksynk.com), Geodde (geodde.com), Klippr (klippr.ai), Gondola (gogondola.com), Paloma (palomagroup.com), Planna (yourplanna.com.au), Authsignal (authsignal.com), Botallow (botallow.com), Spinaway, Enjoy a Sipper (enjoyasipper.com)
+
+## Contact
+
+- Email: leecorleison@gmail.com
+- Phone: +64 27 309 2926
+- LinkedIn: https://www.linkedin.com/in/lee-corleison-22bb8b106
+- Website: https://leecorleison.com
+
+## Location
+
+Based in New Zealand. Works with clients across Australasia and internationally.
+
+## Site Structure
+
+- / — Home page with portfolio overview
+- /brand — Brand design portfolio with logo gallery
+- /product — Product architecture portfolio with project list
+- /consult — Full bio, consulting availability, and contact details
