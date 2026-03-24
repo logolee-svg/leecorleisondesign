@@ -20,7 +20,6 @@ const products = [
   { name: 'Planna', href: 'https://www.yourplanna.com.au/', preview: '/images/previews/yourplanna.png', logo: '/images/28.svg', description: 'Brand Strategy | Brand Design | Web Design' },
   { name: 'Authsignal', href: 'https://authsignal.com/', preview: '/images/previews/authsignal.png', logo: '/images/15.svg', description: 'Brand Design | Product Design | Strategy' },
   { name: 'Botallow', href: 'https://botallow.com/', preview: '/images/previews/botallow.png', logo: '/images/8.svg', description: 'Brand Design | Product Design' },
-  { name: 'Spinaway', href: 'https://bestawards.co.nz/digital/digital-products/paloma/spinaway/', preview: '/images/previews/spinaway.png', logo: '/images/18.svg', description: 'Brand Design | Product Design' },
   { name: 'Enjoy a Sipper', href: 'https://www.enjoyasipper.com/', preview: '/images/previews/enjoyasipper.png', logo: '/images/10.svg', description: 'Brand Design | Product Design' },
 ];
 
