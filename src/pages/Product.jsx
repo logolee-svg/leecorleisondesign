@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import SplitText from '../components/SplitText';
 import SEO, {
   getBreadcrumbSchema,
   getPortfolioCollectionSchema,
@@ -10,17 +12,52 @@ const ArrowIcon = () => (
 );
 
 const products = [
-  { name: 'Tracksynk', href: 'https://tracksynk.com/', preview: '/images/previews/tracksynk.png' },
-  { name: 'Geodde', href: 'https://geodde.com/', preview: '/images/previews/geodde.png' },
-  { name: 'Klippr', href: 'https://klippr.ai/', preview: '/images/previews/klippr.png' },
-  { name: 'Gondola', href: 'https://gogondola.com/', preview: '/images/previews/gogondola.png' },
-  { name: 'Paloma', href: 'https://palomagroup.com/', preview: '/images/previews/palomagroup.png' },
-  { name: 'Planna', href: 'https://www.yourplanna.com.au/', preview: '/images/previews/yourplanna.png' },
-  { name: 'Authsignal', href: 'https://authsignal.com/', preview: '/images/previews/authsignal.png' },
-  { name: 'Botallow', href: 'https://botallow.com/', preview: '/images/previews/botallow.png' },
-  { name: 'Spinaway', href: 'https://bestawards.co.nz/digital/digital-products/paloma/spinaway/', preview: '/images/previews/spinaway.png' },
-  { name: 'Enjoy a Sipper', href: 'https://www.enjoyasipper.com/', preview: '/images/previews/enjoyasipper.png' },
+  { name: 'Tracksynk', href: 'https://tracksynk.com/', preview: '/images/previews/tracksynk.png', logo: '/images/-3.svg', description: 'Brand Design | Product Design | Strategy | Full Stack Engineering' },
+  { name: 'Geodde', href: 'https://geodde.com/', preview: '/images/previews/geodde.png', logo: '/images/-5.svg', description: 'Brand Strategy | Brand Design' },
+  { name: 'Klippr', href: 'https://klippr.ai/', preview: '/images/previews/klippr.png', logo: '/images/-1.svg', description: 'Brand Strategy | Brand Design | Web Design | Web Development' },
+  { name: 'Gondola', href: 'https://gogondola.com/', preview: '/images/previews/gogondola.png', logo: '/images/2.svg', description: 'Brand Strategy | Brand Design | Website Development Strategy' },
+  { name: 'Paloma', href: 'https://palomagroup.com/', preview: '/images/previews/palomagroup.png', logo: '/images/4.svg', description: 'Brand Design | Brand Strategy | Web Strategy | Website Development' },
+  { name: 'Planna', href: 'https://www.yourplanna.com.au/', preview: '/images/previews/yourplanna.png', logo: '/images/28.svg', description: 'Brand Strategy | Brand Design | Web Design' },
+  { name: 'Authsignal', href: 'https://authsignal.com/', preview: '/images/previews/authsignal.png', logo: '/images/15.svg', description: 'Brand Design | Product Design | Strategy' },
+  { name: 'Botallow', href: 'https://botallow.com/', preview: '/images/previews/botallow.png', logo: '/images/8.svg', description: 'Brand Design | Product Design' },
+  { name: 'Spinaway', href: 'https://bestawards.co.nz/digital/digital-products/paloma/spinaway/', preview: '/images/previews/spinaway.png', logo: '/images/18.svg', description: 'Brand Design | Product Design' },
+  { name: 'Enjoy a Sipper', href: 'https://www.enjoyasipper.com/', preview: '/images/previews/enjoyasipper.png', logo: '/images/10.svg', description: 'Brand Design | Product Design' },
 ];
+
+function ProductItem({ product, children }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <li
+      className="product-item"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <a href={product.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${product.name} product`}>
+        <span className="product-name">{product.name}</span>
+        {product.description && (
+          <span className="product-description">
+            {hovered ? (
+              <SplitText
+                text={product.description}
+                className="product-description-text"
+                tag="span"
+                delay={40}
+                duration={0.4}
+                startDelay={0}
+                splitType="words"
+                from={{ opacity: 0, y: 8 }}
+                to={{ opacity: 1, y: 0 }}
+                textAlign="left"
+              />
+            ) : null}
+          </span>
+        )}
+        {children}
+      </a>
+    </li>
+  );
+}
 
 function Product() {
   return (
@@ -46,15 +83,12 @@ function Product() {
         <h1 className="sr-only">Product Architecture Portfolio — Digital Products by Lee Corleison</h1>
         <ul className="product-list" role="list">
           {products.map((product, i) => (
-            <li className="product-item" key={i}>
-              <a href={product.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${product.name} product`}>
-                <span className="product-name">{product.name}</span>
+            <ProductItem key={i} product={product}>
                 <ArrowIcon />
                 <div className="product-preview" aria-hidden="true">
                   <img src={product.preview} alt={`${product.name} product screenshot`} loading="lazy" />
                 </div>
-              </a>
-            </li>
+            </ProductItem>
           ))}
         </ul>
       </section>
