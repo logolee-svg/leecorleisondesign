@@ -144,8 +144,16 @@ export default function ProtoF() {
       anchorEl = Array.from(document.querySelectorAll('.protof .pf-hero, .protof .pf-grid, .protof .sec, .protof .p-footer'))
         .find((el) => el.getBoundingClientRect().bottom > NAV_H + 4) || null;
     };
+    // Only re-anchor on a genuine WIDTH change (desktop window resize / orientation flip
+    // that actually reflows the layout). On mobile, scrolling shows/hides the URL bar,
+    // which fires `resize` with a changed HEIGHT only — repositioning on that snaps the
+    // page back mid-flick and kills momentum scrolling. Ignore height-only changes.
+    let lastW = window.innerWidth;
     const onResize = () => {
+      const widthChanged = window.innerWidth !== lastW;
+      lastW = window.innerWidth;
       measure();
+      if (!widthChanged) return;   // mobile URL-bar toggle (height-only) — never reposition
       if (anchorTimer === null) captureAnchor();   // start of a resize burst — remember where we were
       else clearTimeout(anchorTimer);
       anchorTimer = setTimeout(() => {
