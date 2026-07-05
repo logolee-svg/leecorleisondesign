@@ -1,28 +1,44 @@
 # Lee Corleison Design
 
-> Product architect working across brand design, product architecture, and full-stack engineering. Based in New Zealand.
+> Product architect working across brand design, product design, and full-stack engineering. Based in New Zealand, working with founders across Aotearoa and Australia.
 
 ## About Lee Corleison
 
-Lee Corleison is a product architect with over 20 years of experience shaping digital companies across Australasia. He works across the full spectrum from brand identity systems through to production software.
+Lee Corleison is a product architect with over 20 years shaping brands and the products they become — brand identity, product design, and the engineering to ship them. He carries the whole line himself, from the first mark to production code.
 
-As Executive Creative Director and shareholder at Paloma, ANZ's leading venture studio, he led brand and product design across a venture portfolio now valued north of AUD $500 million, spanning fintech, healthtech, proptech, SaaS, and consumer platforms.
+As Executive Creative Director and shareholder at Paloma, one of ANZ's leading venture studios, he led brand and product across a venture portfolio now valued north of AUD $500 million — spanning fintech, healthtech, proptech, SaaS, and consumer.
 
-He was the original product designer of the early Afterpay app experience during its rapid growth phase. Earlier work at Carnival Labs included mobile products for Air New Zealand, DreamWorks, Kraft Foods, MAC Cosmetics, and AB InBev.
+He designed the early Afterpay app, which became an overnight success. He has also designed for DreamWorks, MAC, AB InBev, and Air New Zealand. Today he works directly with founders as an independent studio.
 
 ## Core Services
 
-- **Brand Design**: Logo design, visual identity systems, brand architecture, naming, brand strategy
-- **Product Architecture**: Digital product design, UX/UI design, design systems, product strategy
-- **Full-Stack Engineering**: Frontend and backend development, React, Node.js, web applications
+- **Brand Design** — Brand strategy and positioning, naming, logo and identity systems, visual identity, art direction, brand architecture, messaging, guidelines
+- **Product Design** — UX/UI design, product design, design systems, interaction design, prototyping, user research, product strategy, design ops
+- **Full-Stack Engineering** — Front-end and full-stack build, React / Next.js, TypeScript, APIs and integrations, performance, production engineering, shipping
 
-## Portfolio Highlights
+## Selected Work
 
-### Brand Work
-Logos and identity systems for: Geodde, Tracksynk, Klippr, Gondola, Paloma, Nextwork, Planna, Authsignal, Botallow, Spinaway, Enjoy a Sipper, Plerion, Supahuman
+Brands and products designed and, in many cases, built end-to-end:
 
-### Product Work
-Digital products designed and built: Tracksynk (tracksynk.com), Geodde (geodde.com), Klippr (klippr.ai), Gondola (gogondola.com), Paloma (palomagroup.com), Planna (yourplanna.com.au), Authsignal (authsignal.com), Botallow (botallow.com), Spinaway, Enjoy a Sipper (enjoyasipper.com)
+- **Tracksynk** — music sync platform — https://tracksynk.com/
+- **Paloma** — venture studio — https://palomagroup.com/
+- **Geodde** — https://geodde.com/
+- **Klippr** — https://klippr.ai/
+- **Gondola** — https://gogondola.com/
+- **Planna** — https://www.yourplanna.com.au/
+- **Authsignal** — fintech authentication — https://authsignal.com/
+- **Enjoy a Sipper** — consumer beverage brand — https://www.enjoyasipper.com/
+- **Nextwork** — https://www.nextwork.org/
+- **Sucasa** — no-deposit home loans
+
+## Experience
+
+- **Lee Corleison Design** — Principal (ongoing) — brand, product, and full-stack engineering, direct with founders
+- **Paloma** — Executive Creative Director & Shareholder (2018–2026)
+- **Afterpay** — Product Designer (2015–2017) — designed the early app experience
+- **Carnival Labs** — Mobile Product Design (2011–2015) — mobile products for Air New Zealand, DreamWorks, Kraft Foods, MAC Cosmetics, and AB InBev
+- **1-night.co.nz** — Brand and product design, Shareholder (2008–2010) — creator of New Zealand's most advanced event ticketing and management software
+- **Massey University** — Bachelor of Design, BDes (2005–2008)
 
 ## Contact
 
@@ -33,11 +49,8 @@ Digital products designed and built: Tracksynk (tracksynk.com), Geodde (geodde.c
 
 ## Location
 
-Based in New Zealand. Works with clients across Australasia and internationally.
+Based in New Zealand (Aotearoa). Works with clients across New Zealand, Australia, and internationally.
 
 ## Site Structure
 
-- / — Home page with portfolio overview
-- /brand — Brand design portfolio with logo gallery
-- /product — Product architecture portfolio with project list
-- /consult — Full bio, consulting availability, and contact details
+Single-page site at https://leecorleison.com/ covering: profile, services (brand, product, engineering), selected work, experience, and contact.

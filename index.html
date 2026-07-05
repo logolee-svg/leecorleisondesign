@@ -43,7 +43,81 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Preconnect for performance -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Structured data (JSON-LD) — Person, studio, website, and the project list -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://leecorleison.com/#lee",
+        "name": "Lee Corleison",
+        "url": "https://leecorleison.com/",
+        "jobTitle": "Product Architect",
+        "description": "Product architect with over 20 years shaping brands and the products they become — brand identity, product design, and the full-stack engineering to ship them. Executive Creative Director at Paloma and the original designer of the early Afterpay app.",
+        "email": "mailto:leecorleison@gmail.com",
+        "telephone": "+64273092926",
+        "worksFor": { "@id": "https://leecorleison.com/#studio" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Massey University" },
+        "address": { "@type": "PostalAddress", "addressCountry": "NZ" },
+        "knowsAbout": ["Brand Design", "Brand Strategy", "Product Design", "UX/UI Design", "Design Systems", "Full-Stack Engineering", "React", "Product Strategy"],
+        "sameAs": ["https://www.linkedin.com/in/lee-corleison-22bb8b106"]
+      },
+      {
+        "@type": ["ProfessionalService", "Organization"],
+        "@id": "https://leecorleison.com/#studio",
+        "name": "Lee Corleison Design",
+        "url": "https://leecorleison.com/",
+        "description": "Independent studio of Lee Corleison — brand design, product design, and full-stack engineering, working directly with founders across New Zealand and Australia.",
+        "founder": { "@id": "https://leecorleison.com/#lee" },
+        "email": "mailto:leecorleison@gmail.com",
+        "telephone": "+64273092926",
+        "areaServed": ["New Zealand", "Australia"],
+        "sameAs": ["https://www.linkedin.com/in/lee-corleison-22bb8b106"],
+        "makesOffer": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Design" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Design" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full-Stack Engineering" } }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://leecorleison.com/#website",
+        "url": "https://leecorleison.com/",
+        "name": "Lee Corleison Design",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://leecorleison.com/#studio" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://leecorleison.com/#webpage",
+        "url": "https://leecorleison.com/",
+        "name": "Lee Corleison — Product Architect | Brand to Full Stack",
+        "isPartOf": { "@id": "https://leecorleison.com/#website" },
+        "about": { "@id": "https://leecorleison.com/#lee" },
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "Selected Work",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "item": { "@type": "CreativeWork", "name": "Tracksynk", "url": "https://tracksynk.com/" } },
+            { "@type": "ListItem", "position": 2, "item": { "@type": "CreativeWork", "name": "Paloma", "url": "https://palomagroup.com/" } },
+            { "@type": "ListItem", "position": 3, "item": { "@type": "CreativeWork", "name": "Geodde", "url": "https://geodde.com/" } },
+            { "@type": "ListItem", "position": 4, "item": { "@type": "CreativeWork", "name": "Klippr", "url": "https://klippr.ai/" } },
+            { "@type": "ListItem", "position": 5, "item": { "@type": "CreativeWork", "name": "Gondola", "url": "https://gogondola.com/" } },
+            { "@type": "ListItem", "position": 6, "item": { "@type": "CreativeWork", "name": "Planna", "url": "https://www.yourplanna.com.au/" } },
+            { "@type": "ListItem", "position": 7, "item": { "@type": "CreativeWork", "name": "Authsignal", "url": "https://authsignal.com/" } },
+            { "@type": "ListItem", "position": 8, "item": { "@type": "CreativeWork", "name": "Enjoy a Sipper", "url": "https://www.enjoyasipper.com/" } },
+            { "@type": "ListItem", "position": 9, "item": { "@type": "CreativeWork", "name": "Nextwork", "url": "https://www.nextwork.org/" } },
+            { "@type": "ListItem", "position": 10, "item": { "@type": "CreativeWork", "name": "Sucasa" } }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="root"></div>

@@ -1,0 +1,736 @@
+/* ============================================================
+   Future Swiss — Hero-2 prototype styles (A & B)
+   Throwaway-ish exploration; ports to the real build later.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap');
+
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  src: url('/fonts/FK%20Grotesk%20Neue%20/woff2/FKGroteskNeue-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  src: url('/fonts/FK%20Grotesk%20Neue%20/woff2/FKGroteskNeue-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'FK Grotesk Neue';
+  src: url('/fonts/FK%20Grotesk%20Neue%20/woff2/FKGroteskNeue-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+.proto {
+  --bg: #0A0A0B;
+  --surface: #141416;
+  --hairline: rgba(255, 255, 255, 0.20);
+  --text: #F2F2F0;
+  --muted: #8C8C90;
+  --faint: #5A5A5E;
+  --green: #4AE800;
+  --grotesk: 'FK Grotesk Neue', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--grotesk);
+  min-height: 100vh;
+}
+.proto *, .proto *::before, .proto *::after { box-sizing: border-box; }
+
+/* --- shared label/type --- */
+.lbl {
+  font-family: var(--mono); font-weight: 400; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0; color: var(--muted);
+}
+.lbl--bright { color: var(--text); }
+/* section titles are <h2> for semantics — strip the UA heading margin so they render like the old label spans */
+h2.lbl { margin: 0; }
+
+/* --- nav --- */
+.p-nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 50;
+  display: flex; align-items: center; height: 40px; padding: 0 40px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--bg);
+}
+.p-nav > div { flex: 1; display: flex; align-items: center; }
+.p-nav .c { justify-content: center; gap: 8px; }
+.p-nav .r { justify-content: flex-end; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+
+/* --- hero --- */
+.p-hero {
+  position: relative; height: 100vh; width: 100%;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 40px 0 40px; overflow: hidden;
+}
+.p-hero__inner { position: relative; z-index: 10; padding-bottom: 124px; }
+.kicker { display: block; margin-bottom: 30px; }
+.statement {
+  font-family: var(--grotesk); font-weight: 500;
+  font-size: clamp(40px, 6vw, 92px); line-height: 1.02;
+  letter-spacing: -0.025em; color: var(--text); max-width: 1400px; margin: 0;
+}
+.p-rail {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; border-top: 1px solid var(--hairline); z-index: 10;
+  background: var(--bg);
+}
+
+/* --- montage marquee --- */
+.montage--curated {
+  display: flex; gap: 16px; width: 100%; height: 100%;
+  padding: 40px 24px 0; overflow: hidden;
+  align-items: flex-start; justify-content: center;
+}
+.montage--curated .mcol {
+  position: relative;
+  flex: 1 1 0; display: flex; flex-direction: column; gap: 16px;
+  will-change: transform; backface-visibility: hidden;
+  animation: floatDrift ease-in-out infinite alternate;
+  animation-duration: 4.6s;
+}
+.montage--curated .mcol:nth-child(1) { animation-duration: 4s; }
+.montage--curated .mcol:nth-child(2) { animation-duration: 5.4s; animation-delay: -1.5s; }
+.montage--curated .mcol:nth-child(3) { animation-duration: 4.4s; animation-delay: -3s; }
+.montage--curated .mcol:nth-child(4) { animation-duration: 5s; animation-delay: -2.2s; }
+.montage--curated .mcol:nth-child(5) { animation-duration: 4.8s; animation-delay: -3.6s; }
+@keyframes floatDrift { from { transform: translate3d(0,0,0); } to { transform: translate3d(0,-30px,0); } }
+
+.mcard {
+  position: relative; width: 100%; flex-shrink: 0; margin: 0;
+}
+.mcard--square { aspect-ratio: 1 / 1; }
+.mcard--wide { aspect-ratio: 16 / 9; }
+.mcard__fill {
+  position: absolute; inset: 0; overflow: hidden;
+  transform-origin: center; will-change: transform, opacity;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease, box-shadow 0.5s ease;
+}
+.mcard__fill img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* hover: pause drift, fade the rest to 50%, lift + shadow the hovered card */
+.montage--curated:hover .mcol { animation-play-state: paused; }
+.montage--curated:hover .mcard__fill { opacity: 0.5; }
+.montage--curated .mcol:hover { z-index: 10; }
+.mcard:hover { z-index: 5; }
+.mcard:hover .mcard__fill {
+  transform: scale(1.4); opacity: 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 36px 90px rgba(0, 0, 0, 0.55);
+}
+
+/* tighter still on small screens */
+@media (max-width: 760px) {
+  .montage--curated { gap: 10px; padding: 24px 12px 0; }
+  .montage--curated .mcol { gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .montage--curated .mcol { animation: none; }
+}
+
+/* ============================================================
+   VARIANT B — next-screen reveal
+   ============================================================ */
+.reveal {
+  position: relative; height: 100vh; width: 100%; overflow: hidden;
+  border-top: 1px solid var(--hairline); background: var(--bg);
+}
+.reveal__top {
+  position: absolute; top: 0; left: 0; width: 100%; z-index: 10;
+  display: flex; justify-content: space-between; padding: 36px 40px 60px;
+  background: linear-gradient(to bottom, rgba(10,10,11,0.9), rgba(10,10,11,0));
+  pointer-events: none;
+}
+.reveal__bottom {
+  position: absolute; bottom: 0; left: 0; width: 100%; z-index: 10;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 60px 40px 18px;
+  background: linear-gradient(to top, rgba(10,10,11,0.95), rgba(10,10,11,0));
+  pointer-events: none;
+}
+.reveal__caption { font-size: 22px; letter-spacing: -0.01em; color: var(--text); max-width: 760px; margin: 0; }
+
+/* ============================================================
+   VARIANT A — takeover (pinned montage assembles over hero)
+   ============================================================ */
+.takeover__montage {
+  position: absolute; inset: 0; z-index: 1;
+}
+.takeover__scrim {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(10,10,11,0.45) 0%, rgba(10,10,11,0.12) 34%, rgba(10,10,11,0.80) 72%, rgba(10,10,11,0.97) 100%);
+  opacity: 0;            /* driven by ScrollTrigger */
+}
+/* always-on darker fade at the bottom so copy + rail stay legible over the montage */
+.takeover__botfade {
+  position: absolute; left: 0; bottom: 0; width: 100%; height: 46%; z-index: 6;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(10,10,11,0.99) 0%, rgba(10,10,11,0.86) 26%, rgba(10,10,11,0) 100%);
+}
+/* takeover rail: hairline sits on the near-solid bottom fade, so it stays crisp (no flicker) */
+.p-rail--a { border-top: 1px solid var(--hairline); }
+
+/* spacer that follows the pinned hero so the page keeps going */
+.after { padding: 140px 40px; border-top: 1px solid var(--hairline); }
+.after h2 { font-family: var(--grotesk); font-weight: 500; font-size: clamp(28px, 4vw, 56px); letter-spacing: -0.03em; margin: 0; max-width: 1100px; }
+
+/* ============================================================
+   Full-page content sections (Future Swiss)
+   ============================================================ */
+.sec {
+  position: relative; z-index: 1; background: var(--bg);
+  display: flex; flex-direction: column; gap: 72px;
+  padding: 120px 40px 130px; border-top: 1px solid var(--hairline);
+}
+/* eyebrow — plain baseline text row: section title+counter left, description right */
+.sec__head {
+  display: flex; align-items: baseline; justify-content: space-between; width: 100%;
+}
+.sec--work, .sec--exp { gap: 56px; }
+.sec--test { gap: 80px; padding-bottom: 0; } /* let the column dividers run to the next section's line */
+
+/* profile */
+.sec--profile { padding-top: 160px; gap: 48px; }
+.sec--profile p {
+  font-family: var(--grotesk); font-weight: 400;
+  font-size: clamp(24px, 2.2vw, 32px); line-height: 1.32;
+  letter-spacing: -0.02em; color: var(--text); max-width: 1320px; margin: 0;
+}
+
+/* services */
+.sec--svc { padding-bottom: 0; } /* let the column dividers run down to meet the next section's top line */
+.svc { display: flex; align-items: stretch; width: 100%; }
+.svc__col {
+  flex: 1 1 0; display: flex; flex-direction: column; gap: 28px;
+  padding: 32px 56px 130px; border-top: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+}
+.svc__col:first-child { padding-left: 0; border-left: none; }
+.svc__col:last-child { padding-right: 0; }
+.svc__name { font-family: var(--grotesk); font-weight: 500; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.2; letter-spacing: -0.03em; margin: 0; color: var(--text); }
+.svc__list { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.svc__list li {
+  position: relative; padding-left: 18px;
+  font-family: var(--mono); font-weight: 400; font-size: 13px;
+  letter-spacing: 0; color: var(--muted);
+}
+.svc__list li::before { content: '•'; position: absolute; left: 2px; top: -1px; color: var(--muted); }
+
+/* work */
+.work { list-style: none; margin: 0; padding: 0; }
+.work__row {
+  position: relative;
+  display: flex; align-items: center; width: 100%; padding: 28px 0;
+  border-top: 1px solid var(--hairline); text-decoration: none; color: var(--text);
+  transition: padding-left 0.3s ease;
+}
+.work li:last-child .work__row { border-bottom: 1px solid var(--hairline); }
+.work__row:hover { padding-left: 16px; }
+.work__idx { width: 64px; flex-shrink: 0; }
+.work__name { flex: 1; font-family: var(--grotesk); font-weight: 500; font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.03em; }
+.work__svc { padding-right: 28px; transition: opacity .3s ease; }
+.work__arr { flex-shrink: 0; color: var(--muted); opacity: 0; transform: translateX(-8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.work__row:hover .work__arr { opacity: 1; transform: translateX(0); }
+/* Lama-Lama-style inline thumbnail strip — fades in on row hover (tags step aside) */
+.work__media {
+  position: absolute; right: 34px; top: 50%;
+  transform: translateY(-50%) translateX(14px);
+  display: flex; align-items: center; gap: 8px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
+}
+/* fixed height, natural width — square images render square, wide images render wide */
+.work__thumb { height: 62px; width: auto; max-width: 200px; border-radius: 3px; display: block; }
+.work__row:hover .work__svc { opacity: 0; }
+.work__row:hover .work__media { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+/* experience */
+.exp { list-style: none; margin: 0; padding: 0; }
+.exp__row { display: flex; align-items: flex-start; gap: 40px; width: 100%; padding: 38px 0; border-top: 1px solid var(--hairline); }
+.exp__years { width: 240px; flex-shrink: 0; font-size: 13px; }
+.exp__mid { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.exp__org { font-family: var(--grotesk); font-weight: 500; font-size: clamp(20px, 1.6vw, 22px); letter-spacing: -0.03em; color: var(--text); }
+.exp__note { width: 460px; flex-shrink: 0; font-family: var(--grotesk); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+/* testimonials */
+.test__featured { margin: 0; max-width: 1500px; display: flex; flex-direction: column; gap: 36px; }
+.test__featured p { font-family: var(--grotesk); font-weight: 400; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.22; letter-spacing: -0.02em; color: var(--text); margin: 0; }
+.test__featured cite, .test__item cite { font-style: normal; }
+.test__support { display: flex; gap: 0; width: 100%; margin-top: 80px; }
+.test__item { margin: 0; flex: 1 1 0; display: flex; flex-direction: column; gap: 24px; padding: 36px 56px 130px; border-top: 1px solid var(--hairline); border-left: 1px solid var(--hairline); }
+.test__item:first-child { padding-left: 0; border-left: none; }
+.test__item:last-child { padding-right: 0; }
+.test__item p { font-family: var(--grotesk); font-size: 22px; line-height: 1.4; letter-spacing: -0.01em; color: var(--text); margin: 0; }
+
+/* contact */
+.sec--contact { padding-top: 160px; padding-bottom: 0; gap: 72px; } /* dividers run down to the footer line */
+.contact__cta { font-family: var(--grotesk); font-weight: 500; font-size: clamp(56px,9vw,100px); line-height: 0.98; letter-spacing: -0.035em; margin: 0 0 56px; color: var(--text); }
+.contact__links { display: flex; width: 100%; }
+.contact__link { flex: 1 1 0; display: flex; flex-direction: column; gap: 18px; padding: 32px 48px 130px; border-top: 1px solid var(--hairline); border-left: 1px solid var(--hairline); text-decoration: none; }
+.contact__link:first-child { padding-left: 0; border-left: none; }
+.contact__val { font-family: var(--grotesk); font-size: 24px; letter-spacing: -0.02em; color: var(--text); }
+.dot--inline { display: inline-block; vertical-align: middle; margin-right: 6px; }
+
+/* footer */
+.p-footer { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 24px 40px; border-top: 1px solid var(--hairline); position: relative; z-index: 1; background: var(--bg); }
+/* footer "Back to Top" — the arrow lifts on hover */
+.p-totop { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.p-totop__arrow { display: inline-block; transition: transform .4s cubic-bezier(.22, 1, .36, 1); }
+.p-totop:hover .p-totop__arrow { transform: translateY(-5px); }
+
+/* ============================================================
+   PROTO B — WebGL floating field hero
+   ============================================================ */
+.field-canvas {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  z-index: 0; pointer-events: none; display: block;
+}
+.pb-hero { position: relative; z-index: 2; height: 100vh; }
+.pb-hero__sticky {
+  position: relative; height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 40px;
+}
+.pb-hero__sticky::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(10,10,11,0.5) 0%, rgba(10,10,11,0) 28%,
+    rgba(10,10,11,0) 60%, rgba(10,10,11,0.92) 100%);
+}
+.pb-hero__inner { padding-bottom: 96px; } /* clear the absolute rail */
+/* per-element warp targets — each zooms back in place during the reveal */
+.pb-hero__inner .kicker[data-warp] { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
+.pb-hero__inner .statement .word { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
+.protob .p-rail--a { border-top-color: rgba(255,255,255,0.28); }
+.protoc .p-rail--a { border-top-color: rgba(255,255,255,0.28); }
+/* proto-c drops the scrim — the grid is invisible until the copy has cleared */
+.protoc .pb-hero__sticky::before { content: none; }
+
+/* --- proto-c: perfect responsive grid (3 cols x 4 rows), 3D on hover --- */
+.pc-grid {
+  position: fixed; left: 0; right: 0; top: 40px; bottom: 60px; z-index: 0;
+  perspective: 1400px; pointer-events: none;
+}
+.pc-grid__plane {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 x 3 = 12 tiles fit one screen at 16:9 */
+  grid-auto-rows: auto;
+  align-content: center;                 /* centre the 3 rows in the fixed band */
+  gap: 12px; padding: 16px 40px;
+  transform-style: preserve-3d; will-change: transform;
+}
+.pc-cell {
+  position: relative; overflow: hidden; opacity: 0; border-radius: 3px;
+  aspect-ratio: 16 / 9; min-width: 0;    /* true 16:9 — no crop */
+  transform-origin: center; will-change: transform, opacity, filter;
+}
+.pc-cell img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* basic responsive columns — fewer cols as the screen narrows (tiles stay 16:9) */
+@media (max-width: 1100px) { .protoc .pc-grid__plane { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px)  { .protoc .pc-grid__plane { grid-template-columns: repeat(2, 1fr); padding: 16px 20px; } }
+
+/* post-reveal: cursor passes through the hero to the grid */
+.protoc .pb-hero { pointer-events: none; }
+.pc-grid--live { pointer-events: auto; }
+.pc-grid--live .pc-cell {
+  opacity: 1; cursor: pointer;
+  transition: transform .55s cubic-bezier(.22, 1, .36, 1), opacity .4s ease, filter .4s ease, box-shadow .4s ease;
+}
+/* ambient hover — the tile lifts forward (real 3D) and brightens a touch */
+.pc-grid--live:not(.pc-grid--featuring) .pc-cell:hover {
+  transform: translateZ(48px) scale(1.035);
+  filter: brightness(1.06);
+}
+/* featured (clicked) — the rest recede, the chosen tile owns the space */
+.pc-grid--featuring { cursor: pointer; } /* clean click-anywhere-to-close */
+.pc-grid--featuring .pc-cell:not(.is-feat) { opacity: 0.18; filter: brightness(0.35); }
+.pc-cell.is-feat { z-index: 20; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6); }
+
+/* caption under the featured image — Geist Mono via .lbl, pinned to the lower band */
+.pc-caption {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none; z-index: 30;
+  opacity: 0; transition: opacity .35s ease .12s;
+}
+.pc-grid--featuring .pc-caption { opacity: 1; }
+
+/* title + services strip over the bottom of the featured image */
+.pc-strip {
+  position: absolute; height: 40px; z-index: 25;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 14px; pointer-events: none;
+  background: #000;
+  border: 1px solid var(--hairline); border-top: none; /* hairline on bottom + sides only */
+  border-radius: 0 0 3px 3px;
+  opacity: 0; transition: opacity .18s ease;
+}
+.pc-strip.pc-strip--show { opacity: 1; } /* shown by JS only once the image is settled */
+.pc-strip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc-strip__title { color: var(--text); flex: 0 1 auto; }
+.pc-strip__svc { color: var(--muted); flex: 0 1 auto; text-align: right; }
+
+/* ============================================================
+   PROTO D — scrolling 16:9 grid (no crop), click-to-expand
+   (sibling of proto-c; fully namespaced so the two never collide)
+   ============================================================ */
+.protod .p-rail--a { border-top-color: rgba(255, 255, 255, 0.28); }
+/* hero copy = the first screen; scrolls away as the grid rises behind it */
+.pd-hero {
+  position: relative; z-index: 2; height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 40px 96px; pointer-events: none;
+}
+.pd-hero__inner .kicker[data-warp] { display: inline-block; opacity: 0; margin-bottom: 30px; will-change: transform, opacity, filter; }
+.pd-hero__inner .statement .word { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
+
+/* the grid is real, scrollable flow content — 4-col mosaic: wide (2:1) / tall (1:2) / square (1:1) */
+.pd-grid { position: relative; z-index: 1; padding: 4px 40px 104px; }
+.pd-grid__plane {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 22vw;          /* fallback; JS sets it = column width so 1x1 = square */
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+.pd-cell {
+  position: relative; overflow: hidden;
+  border-radius: 3px; background: var(--surface); cursor: pointer;
+  opacity: 0; transform-origin: center; will-change: transform, opacity, filter;
+}
+.pd-cell--wide { grid-column: span 2; } /* 2:1 */
+.pd-cell--tall { grid-row: span 2; }    /* 1:2 */
+.pd-cell img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* a tile that's fully in view: CSS owns it (the JS reveal has let go) */
+.pd-cell.is-set { opacity: 1; transition: transform .2s ease, filter .25s ease, box-shadow .35s ease; }
+.pd-cell.is-hover { z-index: 6; box-shadow: 0 26px 64px rgba(0, 0, 0, 0.55); }
+
+/* featured (clicked) — lifts above the rail, the rest recede; the chosen tile flies to centre */
+.pd-grid--featuring { z-index: 45; cursor: pointer; }
+.pd-grid--featuring .pd-cell:not(.is-feat) { opacity: 0.16; filter: brightness(0.4); transform: none; }
+.pd-cell.is-feat {
+  opacity: 1; z-index: 25; box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+  transition: transform .6s cubic-bezier(.22, 1, .36, 1), filter .4s ease;
+}
+
+@media (max-width: 920px) { .pd-grid__plane { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 44vw; } }
+@media (max-width: 540px) {
+  .pd-grid { padding: 4px 12px 104px; }
+  .pd-grid__plane { grid-template-columns: 1fr; grid-auto-rows: 90vw; }
+  .pd-hero { padding: 0 12px 96px; }
+  .protod .p-nav { padding: 0 12px; }   /* header copy gets the 12px mobile margin */
+  .pd-rail { padding: 0 12px; }         /* bottom info bar too */
+}
+
+/* rail pinned at the viewport bottom while the grid scrolls behind it */
+.pd-rail { position: fixed; z-index: 40; }
+/* intro: header + rail start hidden, JS fades them in after the statement lands */
+.protod .p-nav, .protod .pd-rail { opacity: 0; }
+
+/* caption under the featured image — Geist Mono via .lbl, fixed to the viewport */
+.pd-caption {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none; z-index: 60;
+  opacity: 0; transition: opacity .35s ease .12s;
+}
+.pd-grid--featuring ~ .pd-caption { opacity: 1; }
+
+/* title + services strip butted under the featured image (fixed; JS positions it) */
+.pd-strip {
+  position: fixed; height: 40px; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 14px; pointer-events: none;
+  background: #000;
+  border: 1px solid var(--hairline); border-top: none; /* hairline on bottom + sides only */
+  border-radius: 0 0 3px 3px;
+  opacity: 0; transition: opacity .18s ease;
+}
+.pd-strip.pd-strip--show { opacity: 1; } /* shown by JS only once the image is settled */
+.pd-strip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pd-strip__title { color: var(--text); flex: 0 1 auto; }
+.pd-strip__svc { color: var(--muted); flex: 0 1 auto; text-align: right; }
+
+/* ============================================================
+   PROTO E — fork of proto-d: no hover states, permanent per-card info strip
+   ============================================================ */
+.protoe .p-rail--a { border-top-color: rgba(255, 255, 255, 0.28); }
+.pe-hero {
+  position: relative; z-index: 2; height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 40px 96px; pointer-events: none;
+}
+.pe-hero__inner .kicker[data-warp] { display: inline-block; opacity: 0; margin-bottom: 30px; will-change: transform, opacity, filter; }
+.pe-hero__inner .statement .word { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
+
+.pe-grid { position: relative; z-index: 1; padding: 4px 40px 104px; }
+.pe-grid__plane {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: calc(22vw + 40px);  /* fallback; JS sets it = column width + strip so the image is a clean ratio */
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+.pe-cell {
+  position: relative; box-sizing: border-box; overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 3px;
+  opacity: 0; transform-origin: center; will-change: transform, opacity, filter;
+  transition: border-color .25s ease;
+}
+.pe-cell--wide { grid-column: span 2; }
+.pe-cell--tall { grid-row: span 2; }
+/* image occupies a CLEAN ratio (square / 2:1 / 1:2); the strip sits in the 40px below it */
+.pe-cell__media {
+  position: absolute; inset: 0 0 40px 0; overflow: hidden;
+  background: var(--surface);
+}
+/* two stacked covers: 01 (base) crossfades to 02 (hover), synced to the service shimmer */
+.pe-cell__media img {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+  object-fit: cover; transition: opacity 1.2s ease;
+}
+.pe-img--hover { opacity: 0; }
+.pe-cell.is-set { opacity: 1; }
+
+/* the whole cell is framed by a hairline (see .pe-cell); the strip adds only the
+   divider line between the image and the black info bar */
+.pe-cell__info {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 0 13px; pointer-events: none;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  transition: border-color .25s ease;
+}
+.pe-cell__info span { font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pe-ttl { color: var(--text); flex: 0 0 auto; }
+/* services are invisible until hover (on hover-capable devices) */
+.pe-svc { color: transparent; -webkit-text-fill-color: transparent; flex: 0 1 auto; text-align: right; }
+@media (hover: none) { .pe-svc { color: var(--muted); -webkit-text-fill-color: var(--muted); } } /* touch: always show */
+
+/* hover (only once settled): 01 crossfades to 02, info-bar hairline lifts ~30%, and the
+   services shimmer IN — invisible → light-yellow gleam → grey, synced to the crossfade */
+.pe-cell.is-set:hover:not(.pe-cell--nohover) .pe-img--base { opacity: 0; }
+.pe-cell.is-set:hover:not(.pe-cell--nohover) .pe-img--hover { opacity: 1; }
+.pe-cell.is-set:hover { border-color: rgba(255, 255, 255, 0.3); }
+.pe-cell.is-set:hover .pe-cell__info { border-top-color: rgba(255, 255, 255, 0.3); }
+.pe-cell.is-set:hover .pe-svc {
+  /* invisible (right) → light-yellow gleam → grey (left); settles to the original muted grey (#8c8c90) */
+  background: linear-gradient(110deg, #8c8c90 0%, #8c8c90 38%, #ffe98a 50%, transparent 62%, transparent 100%) no-repeat;
+  background-size: 280% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  animation: peShine 1.2s ease forwards;
+}
+@keyframes peShine { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+@media (max-width: 920px) { .pe-grid__plane { grid-template-columns: repeat(2, 1fr); grid-auto-rows: calc(44vw + 40px); } }
+@media (max-width: 540px) {
+  .pe-grid { padding: 4px 12px 104px; }
+  .pe-grid__plane { grid-template-columns: 1fr; grid-auto-rows: calc(90vw + 40px); }
+  .pe-hero { padding: 0 12px 96px; }
+  .protoe .p-nav { padding: 0 12px; }
+  .pe-rail { padding: 0 12px; }
+}
+
+.pe-rail { position: fixed; z-index: 40; }
+.protoe .p-nav, .protoe .pe-rail { opacity: 0; }
+
+/* ============================================================
+   PROTO F — fork of proto-e: 2-col max, square + wide only (no vertical),
+   cells sized by aspect-ratio so it collapses to 1 col at tablet width
+   ============================================================ */
+.protof .p-rail--a { border-top-color: rgba(255, 255, 255, 0.28); }
+.pf-hero {
+  position: relative; z-index: 2; height: 100vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 40px 96px; pointer-events: none;
+}
+.pf-hero__inner .kicker[data-warp] { display: inline-block; opacity: 0; margin-bottom: 30px; will-change: transform, opacity, filter; }
+.pf-hero__inner .statement .word { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
+
+.pf-grid { position: relative; z-index: 1; padding: 4px 40px 104px; }
+.pf-grid__plane {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* square = 1 col, wide = 2 cols → a clean pair per row */
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+.pf-cell {
+  position: relative; box-sizing: border-box; overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 3px;
+  opacity: 0; transform-origin: center; will-change: transform, opacity, filter;
+  transition: border-color .25s ease;
+}
+.pf-cell--wide { grid-column: span 2; }
+/* the image is a clean ratio via aspect-ratio; the 40px strip sits below it in flow */
+.pf-cell__media {
+  position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
+  background: var(--surface);
+}
+.pf-cell--wide .pf-cell__media { aspect-ratio: 2 / 1; }
+/* two stacked covers: 01 (base) crossfades to 02 (hover), synced to the service shimmer.
+   each layer can be an <img> (still) or a <video> (looping / hover-play) — same .pf-img rules */
+.pf-cell__media .pf-img {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+  object-fit: cover; transition: opacity 1.2s ease;
+}
+.pf-img--hover { opacity: 0; }
+.pf-cell.is-set { opacity: 1; }
+
+/* the whole cell is framed by a hairline (see .pf-cell); the strip adds only the divider */
+.pf-cell__info {
+  height: 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 0 13px; pointer-events: none;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  transition: border-color .25s ease;
+}
+.pf-cell__info span { font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pf-ttl { color: var(--text); flex: 0 0 auto; }
+.pf-svc { color: transparent; -webkit-text-fill-color: transparent; flex: 0 1 auto; text-align: right; }
+@media (hover: none) { .pf-svc { color: var(--muted); -webkit-text-fill-color: var(--muted); } }
+
+/* hover (once settled): 01 crossfades to 02, frame + divider brighten, services shimmer in */
+.pf-cell.is-set:hover:not(.pf-cell--nohover) .pf-img--base { opacity: 0; }
+.pf-cell.is-set:hover:not(.pf-cell--nohover) .pf-img--hover { opacity: 1; }
+.pf-cell.is-set:hover { border-color: rgba(255, 255, 255, 0.3); }
+.pf-cell.is-set:hover .pf-cell__info { border-top-color: rgba(255, 255, 255, 0.3); }
+.pf-cell.is-set:hover .pf-svc {
+  background: linear-gradient(110deg, #8c8c90 0%, #8c8c90 38%, #ffe98a 50%, transparent 62%, transparent 100%) no-repeat;
+  background-size: 280% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  animation: peShine 1.2s ease forwards;
+}
+
+/* single column at tablet width — wide stays full width (still 2:1 via aspect-ratio) */
+@media (max-width: 900px) {
+  .pf-grid__plane { grid-template-columns: 1fr; }
+  .pf-cell--wide { grid-column: span 1; }
+}
+@media (max-width: 540px) {
+  .pf-grid { padding: 4px 12px 104px; }
+  .pf-hero { padding: 0 12px 96px; }
+  .protof .p-nav { padding: 0 12px; }
+  .pf-rail { padding: 0 12px; }
+}
+
+.pf-rail { position: fixed; z-index: 40; }
+.protof .p-nav, .protof .pf-rail { opacity: 0; }
+
+/* ============================================================
+   Responsive — content sections + page chrome (kills the horizontal scroll)
+   ============================================================ */
+.proto { overflow-x: hidden; }                 /* safety net: never scroll sideways */
+/* let long flex children shrink instead of forcing the row wider than the screen */
+.work__name, .exp__mid, .svc__col, .contact__link { min-width: 0; }
+.contact__val { overflow-wrap: anywhere; }
+
+/* experience: stack the 3 columns earlier (tablet) so the role label never collides with the note */
+@media (max-width: 1024px) {
+  .exp__row { flex-direction: column; gap: 12px; padding: 28px 0; }
+  .exp__years, .exp__note { width: auto; }
+}
+
+@media (max-width: 900px) {
+  .sec { padding: 84px 24px 92px; gap: 40px; }
+  .sec--profile, .sec--contact { padding-top: 104px; }
+  .sec--work, .sec--exp, .sec--test { gap: 40px; }
+  .sec--profile p { font-size: clamp(20px, 3.4vw, 26px); }
+
+  /* services: 3 columns → single stacked column with horizontal dividers */
+  .svc { flex-direction: column; }
+  .svc__col { flex: none; gap: 18px; padding: 28px 0; border-left: none; border-top: 1px solid var(--hairline); }
+  .svc__col:last-child { padding-bottom: 8px; }
+
+  /* testimonials: side-by-side → stacked, with room so the divider lines don't crowd the copy */
+  .test__support { flex-direction: column; gap: 0; margin-top: 48px; }
+  .test__item { padding: 34px 0 44px; border-left: none; }
+  .test__item:first-child { border-top: 1px solid var(--hairline); }
+
+  /* contact: 3 columns → stacked */
+  .contact__cta { font-size: clamp(44px, 12vw, 80px); margin-bottom: 40px; }
+  .contact__links { flex-direction: column; }
+  .contact__link { padding: 28px 0 36px; border-left: none; }
+  .contact__link:first-child { border-top: 1px solid var(--hairline); }
+}
+
+@media (max-width: 600px) {
+  .sec { padding: 64px 20px 72px; }
+  .sec__head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .contact__cta { font-size: clamp(40px, 13vw, 64px); }
+
+  /* work rows: strip the hover-only service tag (no hover on touch), tighten */
+  .work__row { padding: 22px 0; }
+  .work__row:hover { padding-left: 0; }
+  .work__idx { width: 36px; }
+  .work__svc { display: none; }
+
+  .p-nav { padding: 0 20px; }
+  .p-footer { flex-wrap: wrap; gap: 6px 16px; padding: 20px; }
+}
+/* the work-row thumbnail strip is a hover reveal — remove it entirely on touch devices */
+@media (hover: none) { .work__media { display: none; } }
+
+/* ============================================================
+   Contact modal — opens from the nav "Contact"
+   ============================================================ */
+/* reset only the button chrome — let the .lbl / .lbl--bright classes own the type (matches the other nav labels) */
+.p-navbtn { background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
+
+.cmodal {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  opacity: 0; pointer-events: none; transition: opacity .32s ease;
+}
+.cmodal.is-open { opacity: 1; pointer-events: auto; }
+.cmodal__scrim { position: absolute; inset: 0; background: rgba(6, 6, 7, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.cmodal__panel {
+  position: relative; z-index: 1; box-sizing: border-box;
+  width: 100%; max-width: 620px;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px;
+  padding: 40px 44px 34px;
+  transform: translateY(16px) scale(.985); transition: transform .42s cubic-bezier(.22, 1, .36, 1);
+}
+.cmodal.is-open .cmodal__panel { transform: none; }
+.cmodal__close {
+  position: absolute; top: 18px; right: 18px; width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: none; border: 1px solid var(--hairline); border-radius: 50%;
+  color: var(--muted); cursor: pointer; transition: color .2s ease, border-color .2s ease;
+}
+.cmodal__close:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.34); }
+.cmodal__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cmodal__cta {
+  font-family: var(--grotesk); font-weight: 500; font-size: clamp(38px, 6vw, 60px);
+  line-height: 0.98; letter-spacing: -0.035em; color: var(--text); margin: 26px 0 38px;
+}
+.cmodal__links { display: flex; flex-direction: column; }
+.cmodal__link {
+  position: relative; display: flex; align-items: center; gap: 16px; padding: 20px 0;
+  border-top: 1px solid var(--hairline); text-decoration: none; color: var(--text);
+  transition: padding-left .3s cubic-bezier(.22, 1, .36, 1);
+}
+.cmodal__link:last-child { border-bottom: 1px solid var(--hairline); }
+.cmodal__link:hover { padding-left: 12px; }
+.cmodal__link-label { width: 88px; flex-shrink: 0; color: var(--muted); }
+.cmodal__link-val { flex: 1; min-width: 0; font-family: var(--grotesk); font-weight: 400; font-size: clamp(20px, 2.6vw, 26px); letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cmodal__arr { flex-shrink: 0; color: var(--muted); opacity: 0; transform: translateX(-8px); transition: opacity .3s ease, transform .3s ease; }
+.cmodal__link:hover .cmodal__arr { opacity: 1; transform: translateX(0); }
+.cmodal__foot { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 30px 0 0; }
+.cmodal__foot .lbl { color: var(--faint); white-space: nowrap; }
+
+@media (max-width: 540px) {
+  .cmodal__panel { padding: 32px 22px 26px; }
+  .cmodal__link-label { width: 56px; }
+  .cmodal__link-val { font-size: clamp(15px, 4.6vw, 20px); }
+  .cmodal__arr { display: none; }        /* hover-only affordance — frees space so the email fits on one line */
+}
+@media (max-width: 360px) { .cmodal__clock { display: none; } }  /* really tiny screens: drop the clock */
+
+/* page chrome never wraps — drop the least-important item before anything breaks to two lines */
+.p-nav .lbl, .p-rail .lbl { white-space: nowrap; }
+@media (max-width: 680px) { .p-nav .c { display: none; } }        /* drop the centre "available for work" */
+@media (max-width: 640px) { .pf-rail__mid { display: none; } }     /* drop "scroll to learn more"; keep the other two */
