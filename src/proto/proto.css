@@ -571,6 +571,15 @@ h2.lbl { margin: 0; }
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 0 40px 96px; pointer-events: none;
 }
+/* iOS Safari will NOT start a scroll gesture from an element with pointer-events:none —
+   the touch is dropped and you have to try again. The full-screen hero had that, so any
+   flick starting on the hero copy got eaten (the rail below, a normal touch target, always
+   worked — exactly the two zones observed). On touch, make the hero a real touch target.
+   Desktop keeps pointer-events:none so click/hover behaviour is unchanged; the nav sits
+   above it (z-index 50) so its Contact button is unaffected either way. */
+@media (pointer: coarse) {
+  .pf-hero { pointer-events: auto; }
+}
 .pf-hero__inner .kicker[data-warp] { display: inline-block; opacity: 0; margin-bottom: 30px; will-change: transform, opacity, filter; }
 .pf-hero__inner .statement .word { display: inline-block; opacity: 0; will-change: transform, opacity, filter; }
 
