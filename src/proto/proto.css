@@ -543,7 +543,10 @@ h2.lbl { margin: 0; }
    ============================================================ */
 .protof .p-rail--a { border-top-color: rgba(255, 255, 255, 0.28); }
 .pf-hero {
-  position: relative; z-index: 2; height: 100vh;
+  position: relative; z-index: 2;
+  height: 100vh;   /* fallback for browsers without small-viewport units */
+  height: 100svh;  /* visible height WITH browser toolbars shown — matches the fixed rail
+                      so the bottom-aligned H1 never hides under it (esp. Chrome iOS) */
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 0 40px 96px; pointer-events: none;
 }
