@@ -134,9 +134,14 @@ export default function ProtoF() {
     };
 
     // --- scroll gating: hold the page only for the intro ---
-    const onWheel = (e) => { if (locked) e.preventDefault(); };
-    const onKey = (e) => { if (locked && ['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) e.preventDefault(); };
-    const onTouchMove = (e) => { if (locked) e.preventDefault(); };
+    // Release the hold the instant the user tries to scroll, so their first gesture is
+    // never eaten. On mobile the first flick was landing inside the ~1.2s hold and getting
+    // snapped back to the top. The hold still auto-releases on its own (see the loop) for
+    // anyone who doesn't touch. Listeners are passive — we no longer preventDefault, which
+    // is also better for scroll performance.
+    const onWheel = () => { locked = false; };
+    const onKey = (e) => { if (['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) locked = false; };
+    const onTouchMove = () => { locked = false; };
     // keep the section you're viewing anchored to the top across a browser resize
     const NAV_H = 40;
     let anchorEl = null, anchorTimer = null;
@@ -166,9 +171,9 @@ export default function ProtoF() {
       }, 160);
     };
 
-    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('keydown', onKey);
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
     window.addEventListener('resize', onResize);
     const reMeasure = setTimeout(measure, 320);
 
