@@ -702,6 +702,27 @@ h2.lbl { margin: 0; }
 @media (hover: none) { .work__media { display: none; } }
 
 /* ============================================================
+   Scroll reveals — subtle fade + lift as blocks enter the viewport.
+   Driven by IntersectionObserver (HomeSections.jsx), fully decoupled from
+   scroll/rAF. Animates ONLY transform + opacity (GPU-composited, no layout
+   or paint) so it can't affect scroll performance. Reveal-once.
+   --i staggers grouped siblings (Services 1·2·3, Contact); long lists reveal
+   per-row as they scroll in, so they leave --i at 0.
+   ============================================================ */
+.rvl {
+  opacity: 0;
+  transform: translateY(24px) scale(0.985);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.68s cubic-bezier(0.34, 1.18, 0.4, 1);   /* gentle overshoot = a "settle" */
+  transition-delay: calc(var(--i, 0) * 90ms);           /* slightly more pronounced cascade */
+}
+.rvl.rvl--on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rvl { opacity: 1; transform: none; transition: none; }
+}
+
+/* ============================================================
    Contact modal — opens from the nav "Contact"
    ============================================================ */
 /* reset only the button chrome — let the .lbl / .lbl--bright classes own the type (matches the other nav labels) */

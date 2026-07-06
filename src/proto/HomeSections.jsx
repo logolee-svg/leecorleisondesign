@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { liveWork } from '../data/content';
 
 // condense the manifest's verbose service arrays into short row tags
@@ -79,6 +79,35 @@ function WorkThumb({ slug }) {
 const SHOW_TESTIMONIALS = false; // temporarily hidden — awaiting real quotes
 
 export default function HomeSections() {
+  // subtle scroll-reveal: fade + lift each tagged block as it enters the viewport.
+  // IntersectionObserver only — fully decoupled from scroll/rAF, so it cannot affect
+  // scroll performance or the mobile momentum behaviour. Reveal-once (unobserve after).
+  useEffect(() => {
+    const els = document.querySelectorAll('.protof .rvl');
+    if (!els.length) return;
+    const revealAll = () => els.forEach((el) => el.classList.add('rvl--on'));
+    // Show everything (no animation) if motion is reduced or IO is unavailable.
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) { revealAll(); return; }
+    let io, fallback;
+    try {
+      let fired = false;
+      io = new IntersectionObserver((entries, obs) => {
+        fired = true;
+        for (const e of entries) {
+          if (e.isIntersecting) { e.target.classList.add('rvl--on'); obs.unobserve(e.target); }
+        }
+      }, { threshold: 0.15 }); // full viewport, no bottom margin → last element (footer) always reveals
+      els.forEach((el) => io.observe(el));
+      // Last-resort net: if the observer never delivers a callback, reveal everything so
+      // content can't be stuck hidden. No-op in real browsers (initial callback fires at once).
+      fallback = setTimeout(() => { if (!fired) revealAll(); }, 1800);
+    } catch {
+      revealAll(); // any observer failure → content must still be visible
+    }
+    return () => { clearTimeout(fallback); if (io) io.disconnect(); };
+  }, []);
+
   // smooth scroll to top — use the page's Lenis instance if present, else native smooth
   const backToTop = () => {
     if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.1 });
@@ -88,8 +117,8 @@ export default function HomeSections() {
     <>
       {/* Profile */}
       <section className="sec sec--profile">
-        <h2 className="lbl">Who I Am</h2>
-        <p>
+        <h2 className="lbl rvl">Who I Am</h2>
+        <p className="rvl" style={{ '--i': 1 }}>
           For twenty years I've shaped brands and the products they become: identity, product
           design, and the engineering to ship them. As Executive Creative Director at Paloma, I led
           brand and product across a venture portfolio now worth more than half a billion, and
@@ -101,13 +130,13 @@ export default function HomeSections() {
 
       {/* Services */}
       <section className="sec sec--svc">
-        <div className="sec__head">
+        <div className="sec__head rvl">
           <h2 className="lbl lbl--bright">(02) Services</h2>
           <span className="lbl">What you can hire me for</span>
         </div>
         <div className="svc">
-          {SERVICES.map((s) => (
-            <div className="svc__col" key={s.n}>
+          {SERVICES.map((s, idx) => (
+            <div className="svc__col rvl" key={s.n} style={{ '--i': idx + 1 }}>
               <span className="lbl">{s.n}</span>
               <h3 className="svc__name">{s.name}</h3>
               <ul className="svc__list">
@@ -120,7 +149,7 @@ export default function HomeSections() {
 
       {/* Work */}
       <section className="sec sec--work">
-        <div className="sec__head">
+        <div className="sec__head rvl">
           <h2 className="lbl lbl--bright">(03) Selected Work</h2>
           <span className="lbl">{liveWork.length} Projects — 2020 / 2026</span>
         </div>
@@ -128,7 +157,7 @@ export default function HomeSections() {
           {liveWork.map((w, i) => {
             const Tag = w.url ? 'a' : 'div';
             return (
-              <li key={w.slug}>
+              <li key={w.slug} className="rvl">
                 <Tag className="work__row" {...(w.url ? { href: w.url, target: '_blank', rel: 'noopener noreferrer' } : {})}>
                   <span className="work__idx lbl">{String(i + 1).padStart(2, '0')}</span>
                   <span className="work__name">{w.name}</span>
@@ -146,19 +175,19 @@ export default function HomeSections() {
 
       {/* Awards — NZ Best Design Awards + Australian Good Design Awards, grouped by body */}
       <section className="sec sec--awards">
-        <div className="sec__head">
+        <div className="sec__head rvl">
           <h2 className="lbl lbl--bright">(04) Awards</h2>
           <span className="lbl">New Zealand &amp; Australia</span>
         </div>
         {AWARDS.map((grp) => (
           <div className="awgrp" key={grp.body}>
-            <div className="awgrp__head">
+            <div className="awgrp__head rvl">
               <span className="awgrp__body lbl lbl--bright">{grp.body}</span>
               <span className="awgrp__org lbl">{grp.org}</span>
             </div>
             <ul className="awards">
               {grp.items.map((a, i) => (
-                <li className="aw__row" key={a.entry + a.year + i}>
+                <li className="aw__row rvl" key={a.entry + a.year + i}>
                   <span className="aw__meta">
                     <span className={`aw__dot aw__dot--${a.key}`} aria-hidden="true" />
                     <span className="aw__tier">{a.tier}</span>
@@ -178,13 +207,13 @@ export default function HomeSections() {
 
       {/* Experience */}
       <section className="sec sec--exp">
-        <div className="sec__head">
+        <div className="sec__head rvl">
           <h2 className="lbl lbl--bright">(05) Experience</h2>
           <span className="lbl">Aotearoa &amp; Australia</span>
         </div>
         <ul className="exp">
           {EXPERIENCE.map((e) => (
-            <li className="exp__row" key={e.org}>
+            <li className="exp__row rvl" key={e.org}>
               <span className="exp__years lbl">{e.years}</span>
               <div className="exp__mid">
                 <span className="exp__org">{e.org}</span>
@@ -220,11 +249,11 @@ export default function HomeSections() {
 
       {/* Contact */}
       <section className="sec sec--contact">
-        <div className="sec__head">
+        <div className="sec__head rvl">
           <h2 className="lbl lbl--bright">({SHOW_TESTIMONIALS ? '07' : '06'}) Contact</h2>
         </div>
-        <h2 className="contact__cta">Let's build<br />something.</h2>
-        <div className="contact__links">
+        <h2 className="contact__cta rvl" style={{ '--i': 1 }}>Let's build<br />something.</h2>
+        <div className="contact__links rvl" style={{ '--i': 2 }}>
           <a className="contact__link" href="mailto:leecorleison@gmail.com">
             <span className="lbl">Email</span>
             <span className="contact__val">leecorleison@gmail.com</span>
@@ -240,7 +269,7 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <footer className="p-footer">
+      <footer className="p-footer rvl">
         <span className="lbl">Lee Corleison Design © 2026</span>
         <span className="lbl" style={{ color: 'var(--faint)' }}>Designed &amp; Built by Lee Corleison</span>
         <button type="button" className="p-totop lbl lbl--bright" onClick={backToTop}>
