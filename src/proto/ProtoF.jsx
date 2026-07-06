@@ -182,7 +182,6 @@ export default function ProtoF() {
       const now = performance.now();
       const elapsed = now - mount;
       vh = window.innerHeight;
-      if (locked) { if (elapsed >= LOCK_DUR) locked = false; else lenis.scrollTo(0, { immediate: true }); }
       const sy = window.scrollY;
 
       if (!warpEls.length && heroRef.current) {
