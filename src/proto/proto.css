@@ -656,7 +656,13 @@ h2.lbl { margin: 0; }
 /* ============================================================
    Responsive — content sections + page chrome (kills the horizontal scroll)
    ============================================================ */
-.proto { overflow-x: hidden; }                 /* safety net: never scroll sideways */
+/* Block sideways scroll WITHOUT becoming a scroll container. `overflow-x: hidden` silently
+   computes `overflow-y: auto`, which made .proto a scroll container; the reveal transforms
+   then pushed it a few px past its own height, so iOS Safari trapped every touch-scroll
+   inside .proto (only the position:fixed rail, which lives outside it, could scroll the
+   page). `overflow-x: clip` clips the same way but keeps `overflow-y: visible` — no
+   container, no trap, whole viewport scrolls the page natively. */
+.proto { overflow-x: clip; }
 /* let long flex children shrink instead of forcing the row wider than the screen */
 .work__name, .exp__mid, .aw__mid, .svc__col, .contact__link { min-width: 0; }
 .contact__val { overflow-wrap: anywhere; }
