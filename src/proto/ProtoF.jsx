@@ -95,9 +95,15 @@ export default function ProtoF() {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
-    const lenis = new Lenis({ lerp: 0.09 });
-    lenis.scrollTo(0, { immediate: true });
-    window.__lenis = lenis; // let shared chrome (e.g. footer "Back to Top") drive it
+    // Lenis (smooth wheel) is DESKTOP-ONLY. On touch devices we use NATIVE scrolling: its
+    // momentum is better than anything we'd emulate, and — critically — it means Lenis can
+    // never lerp the page back toward its internal target on the first flick, which is what
+    // was snapping you back to the hero. (The old intro-lock had hidden this by blocking
+    // scroll for the first ~1.2s; with scroll now free, Lenis's touch quirk surfaced.)
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    const lenis = isTouch ? null : new Lenis({ lerp: 0.09 });
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    window.__lenis = lenis; // null on touch → footer "Back to Top" falls back to native smooth scroll
 
     const grid = gridRef.current;
     const navEl = document.querySelector('.protof .p-nav');
@@ -142,7 +148,7 @@ export default function ProtoF() {
     const reMeasure = setTimeout(measure, 320);
 
     const loop = (t) => {
-      lenis.raf(t);
+      if (lenis) lenis.raf(t);
       const now = performance.now();
       const elapsed = now - mount;
       vh = window.innerHeight;
@@ -215,7 +221,7 @@ export default function ProtoF() {
       clearTimeout(reMeasure);
       window.removeEventListener('resize', onResize);
       if (window.__lenis === lenis) window.__lenis = null;
-      lenis.destroy();
+      if (lenis) lenis.destroy();
     };
   }, []);
 
