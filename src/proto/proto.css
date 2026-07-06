@@ -255,6 +255,27 @@ h2.lbl { margin: 0; }
 .exp__org { font-family: var(--grotesk); font-weight: 500; font-size: clamp(20px, 1.6vw, 22px); letter-spacing: -0.03em; color: var(--text); }
 .exp__note { width: 460px; flex-shrink: 0; font-family: var(--grotesk); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--muted); }
 
+/* awards — mirrors the experience row (meta lane · entry · role) with a metallic medal dot */
+.sec--awards { gap: 56px; }
+.awgrp { display: flex; flex-direction: column; }
+.awgrp + .awgrp { margin-top: 28px; }
+.awgrp__head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding-bottom: 12px; }
+.awgrp__org { color: var(--faint); }
+.awards { list-style: none; margin: 0; padding: 0; }
+.aw__row { display: flex; align-items: flex-start; gap: 40px; width: 100%; padding: 32px 0; border-top: 1px solid var(--hairline); }
+.aw__meta { width: 240px; flex-shrink: 0; display: flex; align-items: center; gap: 12px; }
+.aw__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.aw__dot--silver   { background: radial-gradient(circle at 32% 30%, #EDEFF2, #A7ABB2); }
+.aw__dot--bronze   { background: radial-gradient(circle at 32% 30%, #E3A75E, #A05F27); }
+.aw__dot--finalist { background: radial-gradient(circle at 32% 30%, #D8CDB2, #A99C7C); }
+.aw__dot--winner   { background: radial-gradient(circle at 32% 30%, #FFEFA0, #F0B21E); }
+.aw__tier { font-family: var(--mono); font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0; color: var(--text); }
+.aw__year { color: var(--muted); }
+.aw__mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.aw__entry { font-family: var(--grotesk); font-weight: 500; font-size: clamp(20px, 1.6vw, 22px); letter-spacing: -0.03em; color: var(--text); }
+.aw__cat { color: var(--muted); }
+.aw__role { width: 460px; flex-shrink: 0; font-family: var(--grotesk); font-weight: 400; font-size: 16px; line-height: 1.5; color: var(--muted); }
+
 /* testimonials */
 .test__featured { margin: 0; max-width: 1500px; display: flex; flex-direction: column; gap: 36px; }
 .test__featured p { font-family: var(--grotesk); font-weight: 400; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.22; letter-spacing: -0.02em; color: var(--text); margin: 0; }
@@ -628,19 +649,21 @@ h2.lbl { margin: 0; }
    ============================================================ */
 .proto { overflow-x: hidden; }                 /* safety net: never scroll sideways */
 /* let long flex children shrink instead of forcing the row wider than the screen */
-.work__name, .exp__mid, .svc__col, .contact__link { min-width: 0; }
+.work__name, .exp__mid, .aw__mid, .svc__col, .contact__link { min-width: 0; }
 .contact__val { overflow-wrap: anywhere; }
 
 /* experience: stack the 3 columns earlier (tablet) so the role label never collides with the note */
 @media (max-width: 1024px) {
   .exp__row { flex-direction: column; gap: 12px; padding: 28px 0; }
   .exp__years, .exp__note { width: auto; }
+  .aw__row { flex-direction: column; gap: 12px; padding: 26px 0; }
+  .aw__meta, .aw__role { width: auto; }
 }
 
 @media (max-width: 900px) {
   .sec { padding: 84px 24px 92px; gap: 40px; }
   .sec--profile, .sec--contact { padding-top: 104px; }
-  .sec--work, .sec--exp, .sec--test { gap: 40px; }
+  .sec--work, .sec--exp, .sec--test, .sec--awards { gap: 40px; }
   .sec--profile p { font-size: clamp(20px, 3.4vw, 26px); }
 
   /* services: 3 columns → single stacked column with horizontal dividers */
@@ -663,6 +686,7 @@ h2.lbl { margin: 0; }
 @media (max-width: 600px) {
   .sec { padding: 64px 20px 72px; }
   .sec__head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .awgrp__head { flex-direction: column; align-items: flex-start; gap: 3px; }
   .contact__cta { font-size: clamp(40px, 13vw, 64px); }
 
   /* work rows: strip the hover-only service tag (no hover on touch), tighten */

@@ -32,6 +32,29 @@ const EXPERIENCE = [
   { years: '2005 — 2008', org: 'Massey University', role: 'Bachelor of Design — BDes', note: '' },
 ];
 
+// Awards — NZ Best Design Awards (Designers Institute of NZ) + Australian Good Design
+// Awards. `key` drives the medal-dot colour (see .aw__dot--* in proto.css). Newest first.
+const AWARDS = [
+  {
+    body: 'New Zealand Best Design Awards',
+    org: 'Designers Institute of New Zealand',
+    items: [
+      { year: '2024', tier: 'Silver',   key: 'silver',   entry: 'HUD',        cat: 'Digital Products', role: 'Creative Director', studio: 'Paloma' },
+      { year: '2024', tier: 'Bronze',   key: 'bronze',   entry: 'WHEN',       cat: 'Digital Products', role: 'Design Director',   studio: 'Paloma × Universal Favourite' },
+      { year: '2023', tier: 'Bronze',   key: 'bronze',   entry: 'Spinaway',   cat: 'Digital Products', role: 'Creative Director', studio: 'Paloma' },
+      { year: '2023', tier: 'Finalist', key: 'finalist', entry: 'ChemCloud',  cat: 'Digital Products', role: 'Creative Director', studio: 'Paloma' },
+      { year: '2022', tier: 'Silver',   key: 'silver',   entry: 'Authsignal', cat: 'Digital Products', role: 'Creative Director', studio: 'Dovetail Studios' },
+    ],
+  },
+  {
+    body: 'Australian Good Design Awards',
+    org: 'Good Design Australia',
+    items: [
+      { year: '2024', tier: 'Winner', key: 'winner', entry: 'ChemCloud', cat: 'Apps & Software', role: 'Creative Director', studio: 'Paloma Group' },
+    ],
+  },
+];
+
 const TESTIMONIALS = [
   { quote: '“The clarity he brought to our brand and product was transformational — and then he shipped it.”', who: 'Placeholder Name — Role, Company' },
   { quote: '“He thinks like a founder and builds like an engineer. A genuine one-person studio.”', who: 'Placeholder Name — Role, Company' },
@@ -121,10 +144,42 @@ export default function HomeSections() {
         </ul>
       </section>
 
+      {/* Awards — NZ Best Design Awards + Australian Good Design Awards, grouped by body */}
+      <section className="sec sec--awards">
+        <div className="sec__head">
+          <h2 className="lbl lbl--bright">(04) Awards</h2>
+          <span className="lbl">New Zealand &amp; Australia</span>
+        </div>
+        {AWARDS.map((grp) => (
+          <div className="awgrp" key={grp.body}>
+            <div className="awgrp__head">
+              <span className="awgrp__body lbl lbl--bright">{grp.body}</span>
+              <span className="awgrp__org lbl">{grp.org}</span>
+            </div>
+            <ul className="awards">
+              {grp.items.map((a, i) => (
+                <li className="aw__row" key={a.entry + a.year + i}>
+                  <span className="aw__meta">
+                    <span className={`aw__dot aw__dot--${a.key}`} aria-hidden="true" />
+                    <span className="aw__tier">{a.tier}</span>
+                    <span className="aw__year lbl">{a.year}</span>
+                  </span>
+                  <div className="aw__mid">
+                    <span className="aw__entry">{a.entry}</span>
+                    <span className="aw__cat lbl">{a.cat}</span>
+                  </div>
+                  <span className="aw__role">{a.role} — {a.studio}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
       {/* Experience */}
       <section className="sec sec--exp">
         <div className="sec__head">
-          <h2 className="lbl lbl--bright">(04) Experience</h2>
+          <h2 className="lbl lbl--bright">(05) Experience</h2>
           <span className="lbl">Aotearoa &amp; Australia</span>
         </div>
         <ul className="exp">
@@ -145,7 +200,7 @@ export default function HomeSections() {
       {SHOW_TESTIMONIALS && (
       <section className="sec sec--test">
         <div className="sec__head">
-          <span className="lbl lbl--bright">(05) Words</span>
+          <span className="lbl lbl--bright">(06) Words</span>
           <span className="lbl" style={{ color: 'var(--faint)' }}>Placeholder — awaiting real quotes</span>
         </div>
         <blockquote className="test__featured">
@@ -166,7 +221,7 @@ export default function HomeSections() {
       {/* Contact */}
       <section className="sec sec--contact">
         <div className="sec__head">
-          <h2 className="lbl lbl--bright">({SHOW_TESTIMONIALS ? '06' : '05'}) Contact</h2>
+          <h2 className="lbl lbl--bright">({SHOW_TESTIMONIALS ? '07' : '06'}) Contact</h2>
         </div>
         <h2 className="contact__cta">Let's build<br />something.</h2>
         <div className="contact__links">
