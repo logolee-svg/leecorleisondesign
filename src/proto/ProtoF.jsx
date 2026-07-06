@@ -108,10 +108,10 @@ export default function ProtoF() {
     const STMT_END = STMT_START + 8 * WORD_STAGGER + WORD_DUR;
     const KICKER_START = STMT_END + 80, KICKER_DUR = 460;
     const CHROME_START = KICKER_START + 140, CHROME_DUR = 520;
-    const LOCK_DUR = STMT_END;
+    const INTRO_HOLD = STMT_END; // ms the hero words hold (fade in) before scroll can dissolve them
     const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-    let raf, vh = window.innerHeight, locked = true;
+    let raf, vh = window.innerHeight;
     let warpEls = [], gridEls = [], cellY = [], cellXN = [], measured = false;
     let wordEls = [], kickerEl = null;
 
@@ -133,47 +133,11 @@ export default function ProtoF() {
       measured = true;
     };
 
-    // --- scroll gating: hold the page only for the intro ---
-    // Release the hold the instant the user tries to scroll, so their first gesture is
-    // never eaten. On mobile the first flick was landing inside the ~1.2s hold and getting
-    // snapped back to the top. The hold still auto-releases on its own (see the loop) for
-    // anyone who doesn't touch. Listeners are passive — we no longer preventDefault, which
-    // is also better for scroll performance.
-    const onWheel = () => { locked = false; };
-    const onKey = (e) => { if (['ArrowDown', 'PageDown', ' ', 'Spacebar'].includes(e.key)) locked = false; };
-    const onTouchMove = () => { locked = false; };
-    // keep the section you're viewing anchored to the top across a browser resize
-    const NAV_H = 40;
-    let anchorEl = null, anchorTimer = null;
-    const captureAnchor = () => {
-      anchorEl = Array.from(document.querySelectorAll('.protof .pf-hero, .protof .pf-grid, .protof .sec, .protof .p-footer'))
-        .find((el) => el.getBoundingClientRect().bottom > NAV_H + 4) || null;
-    };
-    // Only re-anchor on a genuine WIDTH change (desktop window resize / orientation flip
-    // that actually reflows the layout). On mobile, scrolling shows/hides the URL bar,
-    // which fires `resize` with a changed HEIGHT only — repositioning on that snaps the
-    // page back mid-flick and kills momentum scrolling. Ignore height-only changes.
-    let lastW = window.innerWidth;
-    const onResize = () => {
-      const widthChanged = window.innerWidth !== lastW;
-      lastW = window.innerWidth;
-      measure();
-      if (!widthChanged) return;   // mobile URL-bar toggle (height-only) — never reposition
-      if (anchorTimer === null) captureAnchor();   // start of a resize burst — remember where we were
-      else clearTimeout(anchorTimer);
-      anchorTimer = setTimeout(() => {
-        anchorTimer = null;
-        if (anchorEl) {
-          if (window.__lenis) window.__lenis.scrollTo(anchorEl, { immediate: true, offset: -NAV_H });
-          else anchorEl.scrollIntoView();
-        }
-        anchorEl = null;
-      }, 160);
-    };
-
-    window.addEventListener('wheel', onWheel, { passive: true });
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    // NOTHING here blocks, pins, or re-anchors scroll. Native/Lenis scrolling is always
+    // free on desktop and mobile — no preventDefault, no scroll-to-0, no resize snap-back —
+    // so a flick can never be eaten or fought. The hero intro is held purely by TIME (see
+    // the warp gate in the loop): the words fade in, then dissolve on scroll after ~1.2s.
+    const onResize = () => measure();   // re-measure grid cell centres on layout reflow
     window.addEventListener('resize', onResize);
     const reMeasure = setTimeout(measure, 320);
 
@@ -189,7 +153,12 @@ export default function ProtoF() {
         kickerEl = warpEls[0];
         wordEls = warpEls.slice(1);
       }
-      const warp = clamp01((sy / vh - WARP_START) / (WARP_END - WARP_START));
+      // Hold the words by TIME, not by locking scroll: the scroll-driven dissolve stays at
+      // 0 until the intro has played, then eases in over ~250ms. This is what lets scroll
+      // stay completely free while the intro still reveals cleanly (at the top, scroll=0 so
+      // this is 0 anyway; it only matters once you actually scroll down past the hero).
+      const introEase = clamp01((elapsed - INTRO_HOLD) / 250);
+      const warp = introEase * clamp01((sy / vh - WARP_START) / (WARP_END - WARP_START));
       for (let i = 0; i < wordEls.length; i++) {
         const el = wordEls[i];
         const start = STMT_START + i * WORD_STAGGER;
@@ -244,10 +213,6 @@ export default function ProtoF() {
     return () => {
       cancelAnimationFrame(raf);
       clearTimeout(reMeasure);
-      clearTimeout(anchorTimer);
-      window.removeEventListener('wheel', onWheel);
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('resize', onResize);
       if (window.__lenis === lenis) window.__lenis = null;
       lenis.destroy();
